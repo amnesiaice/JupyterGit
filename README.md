@@ -1,6 +1,7 @@
 # JupyterGit
 Jupyter notebook
-
+## progress
+fixing texture on sphere, the texture is fixed but the uv coord is not right, can move on to reconstruct now
 ## Final target:simple software renderer with python
 ## Todo
 - fix texture on ball
