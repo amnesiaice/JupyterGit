@@ -11,7 +11,8 @@ Jupyter notebook
 - add parameter to modify graphic variable
 - add parameter for different display mode
 - display triangle with different vertex color
-**[feature]**
+
+**[Feature]**
 - strip drawing
 - change the model from ball to cube
 - wire frame model
@@ -20,6 +21,7 @@ Jupyter notebook
 - clipping
 
 Not a feature that must be implemented
-**[advanced feature]**
+
+**[Advanced feature]**
 - point light with different color light
 - shadow
