@@ -1,2 +1,2 @@
 
-__all__=['ProjectConst.py']
+__all__ = ['ProjectConst', 'ResourceManager']
