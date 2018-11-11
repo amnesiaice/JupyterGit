@@ -1,3 +1,2 @@
-class ProjectConst:
-    def __init__(self):
-        self.data = []
+light_direct=(1,1,1)
+

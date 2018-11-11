@@ -1,9 +1,11 @@
 # JupyterGit
 Jupyter notebook
+# Demo
+# PythonRenderer
 ## progress
 [2018.11.09]  fixing texture on sphere, the texture is fixed but the uv coord is not right, can move on to reconstruct now.
 
-[2018.11.08]  start reconstruct the code, the reconstruct design thought is write in the jupyter notebook.
+[2018.11.08]  start reconstruct the code modified form demo project, the reconstruct design thought is write in the jupyter notebook.
 ## Final target:simple software renderer with python
 ## Todo
 - fix texture on ball
