@@ -1,15 +1,5 @@
-import matplotlib.pyplot as plt
-import PythonRendererCode.ProjectConst as PrjConst
-# My module
-import PythonRendererCode.ResourceManager as RscMgr
+import PythonRendererCode.feature_manger as feamgr
 
-# test code
-print('1')
-print(PrjConst.light_direct)
-
-img = RscMgr.blank_target
-tex = RscMgr.texture_mario
-plt.axis('off')
-# plt.imshow(tex)
-plt.imshow(img)
-plt.show()
+# test feature
+print('display spere')
+feamgr.display_sphere()

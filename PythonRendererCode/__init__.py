@@ -1,2 +1,2 @@
 
-__all__ = ['ProjectConst', 'ResourceManager']
+__all__ = ['graphic_manager', 'resource_manager', 'feature_manger']
