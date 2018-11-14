@@ -1,5 +1,5 @@
 import PythonRendererCode.feature_manger as feamgr
 
 # test feature
-print('display spere')
+print('display sphere')
 feamgr.display_sphere()
