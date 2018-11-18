@@ -5,6 +5,7 @@ light_direct = (1, -1, 1)
 radius = 100
 item_color = (0.8, 0.8, 0.8, 1)
 back_ground_color = (0.7, 0.3, 0.3, 1)
+is_use_texture = True
 
 # 600x600 pix target
 small_target = mpimg.imread('Resource/testImage.png')
