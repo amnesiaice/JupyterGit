@@ -5,6 +5,8 @@ import PythonRendererCode.resource_manager as resource_manager
 # local const
 l_pi = np.pi
 
+def make_cube(p_img,p_vertex_buffer,pivot_position):
+    p_vertex_buffer[0]
 
 def make_sphere(p_img, p_radius):
     l_height = len(p_img)
