@@ -1,1 +1,1 @@
-__all__ = ['canvas']
+__all__ = ['Canvas.py', 'draw_API.py', 'DrawMode']

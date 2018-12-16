@@ -1,5 +1,6 @@
 import matplotlib.image as mpimg
-import PythonRendererCode.ResourceEntities.canvas as canvas
+from PythonRendererCode.ResourceEntities.Canvas import Canvas
+from PythonRendererCode.ResourceEntities.DrawMode import DrawMode
 # parameter used in this project
 light_direct = (1, -1, 1)
 radius = 100
@@ -17,8 +18,10 @@ medium_target = mpimg.imread('Resource/1920Blank.png')
 current_target = small_target
 # texture 1
 texture_mario = mpimg.imread('Resource/testTexture.png')
+# canvas draw mode
+current_draw_mode = DrawMode.standard
 # canvas
-current_canvas = canvas.Canvas()
+current_canvas = Canvas()
 
 # cube vetex buffer
 cube_vertex_buffer = (
@@ -31,6 +34,11 @@ cube_vertex_buffer = (
                         (-1, -1, 0, 1),  # v6
                         (-1, -1, 1, 1),  # v7
                       )
+
+
+def set_draw_mode_point():
+    global current_draw_mode
+    current_draw_mode = DrawMode.point
 
 
 def load_render_target(size):

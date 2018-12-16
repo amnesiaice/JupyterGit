@@ -1,12 +1,19 @@
 import numpy as np
-
 import PythonRendererCode.resource_manager as resource_manager
-
+from PythonRendererCode.GraphEntities.Triangle import Triangle
+# =================
 # local const
+# =================
 l_pi = np.pi
 
 
-def make_cube(p_img,p_vertex_buffer,pivot_position):
+def make_triangle(p_point1, p_point2, p_point3):
+    o_triangle = Triangle()
+    o_triangle.set_point(p_point1, p_point2, p_point3)
+    return o_triangle
+
+
+def make_cube(p_img,p_vertex_buffer,p_pivot_position):
     p_vertex_buffer[0]
 
 
@@ -25,8 +32,8 @@ def make_sphere(p_img, p_radius):
     l_texture_start_x = 270
     l_texture_start_y = 280
     l_texture_length = 800
-    for j in range(0, l_width-1):
-        for i in range(0, l_height-1):
+    for j in range(0, l_width):
+        for i in range(0, l_height):
             if np.square(j-l_center_x)+np.square(i-l_center_y) < np.square(p_radius):
                 # draw the sphere
                 if resource_manager.is_use_texture:
