@@ -1,29 +1,5 @@
-# JupyterGit
-Jupyter notebook
-# Demo
-# PythonRenderer
-## progress
-[2018.11.09]  fixing texture on sphere, the texture is fixed but the uv coord is not right, can move on to reconstruct now.
-
-[2018.11.08]  start reconstruct the code modified form demo project, the reconstruct design thought is write in the jupyter notebook.
-## Final target:simple software renderer with python
-## Todo
-- fix texture on ball
-**[reconstruct the code]**
-- add parameter to modify graphic variable
-- add parameter for different display mode
-- display triangle with different vertex color
-
-**[Feature]**
-- strip drawing
-- change the model from ball to cube
-- wire frame model
-- g-buffer
-- texture on triangle
-- clipping
-
-Not a feature that must be implemented
-
-**[Advanced feature]**
-- point light with different color light
-- shadow
+# Software Renderer with Python
+**About this project:**This is a personal learning project about learning the Computer Graphic. This project will use Python to implement a software renderer and use the jupyter notebook to make a interactive model and take note about what I have learned.
+## Project struct
+- The issue record all the feature to be done and all the related progress attach to the feature
+(TBD)
