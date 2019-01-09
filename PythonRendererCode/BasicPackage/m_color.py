@@ -32,3 +32,7 @@ class Color:
         else:
             print("not supported default color")
             return [1.0, 1.0, 1.0, 1.0]
+
+    @staticmethod
+    def color_interpolation(p_color_ori, p_color_fin, i):
+        print("")
