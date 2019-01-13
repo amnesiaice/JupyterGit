@@ -26,3 +26,7 @@ class Canvas:
 
     def set_point(self, p_x, p_y, p_color):
         self.target[p_y][p_x] = p_color
+
+    def set_point_buffer(self, p_point2_buffer):
+        for i_point2 in p_point2_buffer:
+            self.set_point(i_point2[0], i_point2[1], i_point2[2])

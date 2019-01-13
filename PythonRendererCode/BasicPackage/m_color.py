@@ -34,5 +34,6 @@ class Color:
             return [1.0, 1.0, 1.0, 1.0]
 
     @staticmethod
-    def color_interpolation(p_color_ori, p_color_fin, i):
+    def color_interpolation(p_color_ori, p_color_fin, i, max):
         print("")
+        return p_color_fin
