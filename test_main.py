@@ -22,10 +22,10 @@ def test_case(p_case):
     if p_case == 2:
         print_test_info(p_case)
         l_background_color = m_color.Color.get_default_color("white")
-        point1 = m_point.Point(200, 400, 0)
-        point2 = m_point.Point(400, 400, 0)
-        point3 = m_point.Point(200, 100, 0)
-        point4 = m_point.Point(200, 400, 0)
+        point1 = m_point.Point(200, 400, 0, m_color.Color.get_default_color("light blue"))
+        point2 = m_point.Point(400, 400, 0, m_color.Color.get_default_color("red"))
+        point3 = m_point.Point(200, 100, 0, m_color.Color.get_default_color("green"))
+        point4 = m_point.Point(200, 400, 0, m_color.Color.get_default_color("light blue"))
         ui.draw_triangle_line_mode(800, 600, l_background_color,
                                    point1, point2, point3, point4)
 
