@@ -30,7 +30,7 @@ class Color:
         elif p_color == 'blue':
             return [0.0, 0.0, 0.9, 1.0]
         elif p_color == 'light blue':
-            return [0.28, 0.72, 0.98, 1]
+            return [0.28, 0.72, 0.98, 1.0]
         elif p_color == 'white':
             return [1.0, 1.0, 1.0, 1.0]
         elif p_color == 'black':

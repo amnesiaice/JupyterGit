@@ -10,7 +10,7 @@ class Device:
     class DrawMode(Enum):
         POINT = 1
         LINE = 2
-        DRAW = 3
+        STANDARD = 3
 
     def __init__(self):
         self.device_canvas = Canvas()
@@ -42,8 +42,8 @@ class Device:
             self.current_draw_mode = self.DrawMode.POINT
         elif p_draw_mode == "line":
             self.current_draw_mode = self.DrawMode.LINE
-        elif p_draw_mode == "draw":
-            self.current_draw_mode = self.DrawMode.DRAW
+        elif p_draw_mode == "standard":
+            self.current_draw_mode = self.DrawMode.STANDARD
         else:
             self.current_draw_mode = p_draw_mode
 
@@ -54,7 +54,6 @@ class Device:
         m_draw_API.draw(self.device_canvas.target)
 
     def __set_buffer_point(self):
-        dbg.debug_print(dbg.LogLevel.INFO, "draw in point mode")
         l_point2_buffer = m_tool_set.transform_canvas_point_buffer(self.vertex_buffer)
         for i in range(len(l_point2_buffer)):
             l_screen_position = l_point2_buffer[i]
@@ -64,7 +63,6 @@ class Device:
             self.device_canvas.set_point(l_screen_x, l_screen_y, l_screen_color)
 
     def __set_buffer_line(self):
-        dbg.debug_print(dbg.LogLevel.INFO, "draw in line mode")
         l_point2_buffer = m_tool_set.transform_canvas_point_buffer(self.vertex_buffer)
         l_start_point = l_point2_buffer[0]
         for i in range(1, len(l_point2_buffer)):
