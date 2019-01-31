@@ -1,5 +1,4 @@
 from enum import Enum
-import re
 
 
 class LogLevel(Enum):
@@ -26,11 +25,11 @@ def debug_print_point(p_point, p_log_level=LogLevel.INFO):
     debug_print(p_log_level, "x:%d y:%d z:%d" % p_point.get_x(), p_point.get_y(), p_point.get_z())
 
 
-def debug_img(img):
+def debug_img(img, b_blacklist_mode):
     l_filter = read_debug_point_filter()
     for j in range(len(img)):
         for i in range(len(img[0])):
-            if str(img[j][i]) in l_filter:
+            if (str(img[j][i]) in l_filter) ^ b_blacklist_mode: # blacklist all the listed point will not print
                 # debug_print(LogLevel.DEBUG_INFO, "color:", img[j][i])
                 debug_print(LogLevel.DEBUG_INFO, "x:%s,y:%s" % (i, j))
                 debug_print(LogLevel.DEBUG_INFO, "point color:%s" % img[j][i])

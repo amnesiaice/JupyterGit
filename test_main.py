@@ -3,7 +3,7 @@ from PythonRendererCode.BasicPackage import m_color
 from PythonRendererCode.BasicPackage import m_point
 import PythonRendererCode.BasicPackage.m_debug_info as dbg
 # g_max_test_list = [0, 1, 2, 3]
-g_max_test_list = [2]
+g_max_test_list = [3]
 
 
 def test_case(p_case):
