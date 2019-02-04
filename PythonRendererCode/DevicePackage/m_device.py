@@ -1,21 +1,26 @@
 from enum import Enum
 from m_canvas import Canvas
-import PythonRendererCode.BasicPackage.m_debug_info as dbg
-from PythonRendererCode.BasicPackage.m_point import Color
+from PythonRendererCode.PRDebugPackage.m_pr_debug import PRDebug
+from PythonRendererCode.PRDebugPackage.m_pr_debug import LogLevel
 import m_draw_API
 import m_tool_set
 
 
-class Device:
-    class DrawMode(Enum):
-        POINT = 1
-        LINE = 2
-        STANDARD = 3
+class DrawMode(Enum):
+    NONE = 0
+    POINT = 1
+    LINE = 2
+    STANDARD = 3
 
+
+class Device:
     def __init__(self):
         self.device_canvas = Canvas()
         self.vertex_buffer = []
-        self.current_draw_mode = self.DrawMode.POINT
+        self.current_draw_mode = DrawMode.POINT
+
+        # init debug object
+        self.pr_debug = PRDebug()
 
     def init_device(self,
                     # parameter used for canvas
@@ -25,34 +30,52 @@ class Device:
                                        p_height=p_canvas_height,
                                        p_color=p_canvas_color)
 
+    # ============================================================
+    # draw config
+    # ============================================================
     def append_vertex_buffer(self, p_point):
         self.vertex_buffer.append(p_point)
 
     def set_buffer_to_canvas(self):
-        if self.current_draw_mode == self.DrawMode.POINT:
+        if self.current_draw_mode == DrawMode.NONE:
+            self.pr_debug.debug_print(LogLevel.ERROR, "draw mode not set yet")
+            assert True
+        elif self.current_draw_mode == DrawMode.POINT:
             self.__set_buffer_point()
-        elif self.current_draw_mode == self.DrawMode.LINE:
+        elif self.current_draw_mode == DrawMode.LINE:
             self.__set_buffer_line()
         else:
-            dbg.debug_print(dbg.LogLevel.ERROR, "draw mode not supported yet")
+            self.pr_debug.debug_print(LogLevel.ERROR, "draw mode not supported yet")
             assert True
 
     def set_draw_mode(self, p_draw_mode):
         if p_draw_mode == "point":
-            self.current_draw_mode = self.DrawMode.POINT
+            self.current_draw_mode = DrawMode.POINT
         elif p_draw_mode == "line":
-            self.current_draw_mode = self.DrawMode.LINE
+            self.current_draw_mode = DrawMode.LINE
         elif p_draw_mode == "standard":
-            self.current_draw_mode = self.DrawMode.STANDARD
+            self.current_draw_mode = DrawMode.STANDARD
         else:
             self.current_draw_mode = p_draw_mode
 
     def get_draw_mode(self):
         return self.current_draw_mode
 
+    # ============================================================
+    # draw function
+    # ============================================================
     def show(self):
-        m_draw_API.draw(self.device_canvas.target)
+        img = self.device_canvas.target
+        # debug
+        if self.pr_debug.get_debug_enable():
+            self.pr_debug.set_debug_info_img(img)
+            self.pr_debug.debug_img()
 
+        m_draw_API.draw(img)
+
+    # ============================================================
+    # private function
+    # ============================================================
     def __set_buffer_point(self):
         l_point2_buffer = m_tool_set.transform_canvas_point_buffer(self.vertex_buffer)
         for i in range(len(l_point2_buffer)):
