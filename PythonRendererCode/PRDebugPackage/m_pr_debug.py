@@ -1,4 +1,5 @@
 from enum import Enum
+import ConfigParser
 
 
 class LogLevel(Enum):
@@ -24,11 +25,13 @@ class DebugConfig:
 
 
 class PRDebug:
-    g_debug_enable = True  # todo: should read from config file
+    g_debug_enable = True
 
     def __init__(self,
-                 p_is_debug_enable,
+                 p_is_debug_enable=True,
                  ):
+        self.__read_debug_config()
+        p_is_debug_enable = p_is_debug_enable and PRDebug.g_debug_enable
         if p_is_debug_enable:
             self.debug_enable = True
             self.current_log_level = LogLevel.ALL
@@ -102,7 +105,10 @@ class PRDebug:
             for i in range(len(self.debug_info_img[0])):
                 if (str(self.debug_info_img[j][i]) in self.__debug_filter_line) ^ self.is_blacklist_mode:
                     self.debug_print(LogLevel.DEBUG_INFO, "x:%s,y:%s" % (i, j))
-                    self.debug_print(LogLevel.DEBUG_INFO, "point color:%s" % self.debug_info_img[j][i])
+                    self.debug_print(LogLevel.DEBUG_INFO, "point color:[%.2f, %.2f, %.2f, %.2f]" %
+                                     (self.debug_info_img[j][i][0], self.debug_info_img[j][i][1],
+                                      self.debug_info_img[j][i][2], self.debug_info_img[j][i][3])
+                                     )
 
     # ============================================================
     # private function
@@ -122,3 +128,9 @@ class PRDebug:
 
         self.__debug_filter_line = l_filter_file[1:]
         l_file.close()
+
+    @staticmethod
+    def __read_debug_config():
+        debug_config = ConfigParser.ConfigParser()
+        debug_config.readfp(open('PythonRendererCode/pyrender_config.ini'))
+        PRDebug.g_debug_enable = debug_config.getboolean('debug', 'g_debug_enable')
