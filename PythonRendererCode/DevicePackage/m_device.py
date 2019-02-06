@@ -2,6 +2,7 @@ from enum import Enum
 from m_canvas import Canvas
 from PythonRendererCode.PRDebugPackage.m_pr_debug import PRDebug
 from PythonRendererCode.PRDebugPackage.m_pr_debug import LogLevel
+from PythonRendererCode import config_warehouse
 import m_draw_API
 import m_tool_set
 
@@ -22,9 +23,20 @@ class Device:
         # init debug object
         self.pr_debug = PRDebug()
 
+        # read from config
+        l_canvas_size = self.__read_size_config()
+        self.default_width = l_canvas_size[0]
+        self.default_height = l_canvas_size[1]
+
     def init_device(self,
                     # parameter used for canvas
-                    p_canvas_width, p_canvas_height,  p_canvas_color):
+                    p_canvas_color,
+                    p_canvas_width=None,
+                    p_canvas_height=None
+                    ):
+        if p_canvas_width is None:
+            p_canvas_width = self.default_width
+            p_canvas_height = self.default_height
         # initialize canvas
         self.device_canvas.init_canvas(p_width=p_canvas_width,
                                        p_height=p_canvas_height,
@@ -39,14 +51,16 @@ class Device:
     def set_buffer_to_canvas(self):
         if self.current_draw_mode == DrawMode.NONE:
             self.pr_debug.debug_print(LogLevel.ERROR, "draw mode not set yet")
-            assert True
+            assert False
         elif self.current_draw_mode == DrawMode.POINT:
             self.__set_buffer_point()
         elif self.current_draw_mode == DrawMode.LINE:
             self.__set_buffer_line()
+        elif self.current_draw_mode == DrawMode.STANDARD:
+            self.__set_buffer_standard()
         else:
             self.pr_debug.debug_print(LogLevel.ERROR, "draw mode not supported yet")
-            assert True
+            assert False
 
     def set_draw_mode(self, p_draw_mode):
         if p_draw_mode == "point":
@@ -76,6 +90,7 @@ class Device:
     # ============================================================
     # private function
     # ============================================================
+    # todo: replace set_buffer function with the pipeline to convert from world postion to screen position
     def __set_buffer_point(self):
         l_point2_buffer = m_tool_set.transform_canvas_point_buffer(self.vertex_buffer)
         for i in range(len(l_point2_buffer)):
@@ -87,9 +102,26 @@ class Device:
 
     def __set_buffer_line(self):
         l_point2_buffer = m_tool_set.transform_canvas_point_buffer(self.vertex_buffer)
-        l_start_point = l_point2_buffer[0]
-        for i in range(1, len(l_point2_buffer)):
+        l_start_point = l_point2_buffer[-1]
+        for i in range(0, len(l_point2_buffer)):
             l_end_point = l_point2_buffer[i]
             l_line_buffer = m_tool_set.make_int_line(l_start_point, l_end_point)
             self.device_canvas.set_point_buffer(l_line_buffer)
             l_start_point = l_end_point
+
+    def __set_buffer_standard(self):
+        l_point2_buffer = m_tool_set.transform_canvas_point_buffer(self.vertex_buffer)
+        l_first_point = l_point2_buffer[0]
+        l_second_point = l_point2_buffer[1]
+        for i in range(2, len(l_point2_buffer)):
+            l_third_point = l_point2_buffer[i]
+            l_triangle_buffer = m_tool_set.make_int_triangle(l_first_point, l_second_point, l_third_point)
+            self.device_canvas.set_point_buffer(l_triangle_buffer)
+            l_first_point = l_second_point
+            l_second_point = l_third_point
+
+    @staticmethod
+    def __read_size_config():
+        o_width = config_warehouse.width_config
+        o_height = config_warehouse.height_config
+        return [o_width, o_height]

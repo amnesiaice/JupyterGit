@@ -1,2 +1,2 @@
 
-__all__ = ['user_interface', 'BasicPackage', 'DevicePackage', 'EntityPackage']
+__all__ = ['user_interface', 'config_warehouse', 'BasicPackage', 'DevicePackage', 'EntityPackage']

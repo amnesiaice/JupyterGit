@@ -38,12 +38,3 @@ class Color:
         else:
             print("not supported default color")
             return [1.0, 1.0, 1.0, 1.0]
-
-    @staticmethod
-    def color_interpolation(p_color_ori, p_color_fin, i, max_i):
-        fraction = float(i)/float(max_i)
-        l_r = (p_color_fin[0] - p_color_ori[0]) * fraction + p_color_ori[0]
-        l_g = (p_color_fin[1] - p_color_ori[1]) * fraction + p_color_ori[1]
-        l_b = (p_color_fin[2] - p_color_ori[2]) * fraction + p_color_ori[2]
-        o_interpolated_color = [l_r, l_g, l_b, 1.0]
-        return o_interpolated_color

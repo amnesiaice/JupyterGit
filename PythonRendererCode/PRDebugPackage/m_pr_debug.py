@@ -1,5 +1,5 @@
 from enum import Enum
-import ConfigParser
+from PythonRendererCode import config_warehouse
 
 
 class LogLevel(Enum):
@@ -16,7 +16,7 @@ class DebugConfig:
                  p_is_debug_enable=True,
                  p_current_log_level=LogLevel.ALL,
                  p_debug_filter_location="PythonRendererCode/PRDebugPackage/DebugFilter/",
-                 p_debug_filter_name="debug_point_info.txt",
+                 p_debug_filter_name="debug_point_info.txt"
                  ):
         self.debug_enable = p_is_debug_enable
         self.current_log_level = p_current_log_level
@@ -131,6 +131,4 @@ class PRDebug:
 
     @staticmethod
     def __read_debug_config():
-        debug_config = ConfigParser.ConfigParser()
-        debug_config.readfp(open('PythonRendererCode/pyrender_config.ini'))
-        PRDebug.g_debug_enable = debug_config.getboolean('debug', 'g_debug_enable')
+        PRDebug.g_debug_enable = config_warehouse.g_debug_enable_config
