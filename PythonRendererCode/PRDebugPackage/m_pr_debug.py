@@ -105,6 +105,7 @@ class PRDebug:
             for i in range(len(self.debug_info_img[0])):
                 if (str(self.debug_info_img[j][i]) in self.__debug_filter_line) ^ self.is_blacklist_mode:
                     self.debug_print(LogLevel.DEBUG_INFO, "x:%s,y:%s" % (i, j))
+                    print(self.debug_info_img[j][i])
                     self.debug_print(LogLevel.DEBUG_INFO, "point color:[%.2f, %.2f, %.2f, %.2f]" %
                                      (self.debug_info_img[j][i][0], self.debug_info_img[j][i][1],
                                       self.debug_info_img[j][i][2], self.debug_info_img[j][i][3])

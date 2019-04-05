@@ -1,10 +1,10 @@
 from enum import Enum
 from m_canvas import Canvas
+from PythonRendererCode.PipePackage.m_pipe import Pipe
 from PythonRendererCode.PRDebugPackage.m_pr_debug import PRDebug
 from PythonRendererCode.PRDebugPackage.m_pr_debug import LogLevel
 from PythonRendererCode import config_warehouse
 import m_draw_API
-import m_tool_set
 
 
 class DrawMode(Enum):
@@ -17,6 +17,7 @@ class DrawMode(Enum):
 class Device:
     def __init__(self):
         self.device_canvas = Canvas()
+        self.device_pipe = Pipe()
         self.vertex_buffer = []
         self.current_draw_mode = DrawMode.POINT
 
@@ -24,7 +25,7 @@ class Device:
         self.pr_debug = PRDebug()
 
         # read from config
-        l_canvas_size = self.__read_size_config()
+        l_canvas_size = self.__read_window_size_config()
         self.default_width = l_canvas_size[0]
         self.default_height = l_canvas_size[1]
 
@@ -92,7 +93,11 @@ class Device:
     # ============================================================
     # todo: replace set_buffer function with the pipeline to convert from world postion to screen position
     def __set_buffer_point(self):
-        l_point2_buffer = m_tool_set.transform_canvas_point_buffer(self.vertex_buffer)
+        self.device_pipe.set_input_buffer(self.vertex_buffer)
+        self.device_pipe.run_pipe()
+
+        assert self.device_pipe.is_output_ready
+        l_point2_buffer = self.device_pipe.output_buffer
         for i in range(len(l_point2_buffer)):
             l_screen_position = l_point2_buffer[i]
             l_screen_x = l_screen_position[0]
@@ -101,27 +106,35 @@ class Device:
             self.device_canvas.set_point(l_screen_x, l_screen_y, l_screen_color)
 
     def __set_buffer_line(self):
-        l_point2_buffer = m_tool_set.transform_canvas_point_buffer(self.vertex_buffer)
+        self.device_pipe.set_input_buffer(self.vertex_buffer)
+        self.device_pipe.run_pipe()
+
+        assert self.device_pipe.is_output_ready
+        l_point2_buffer = self.device_pipe.output_buffer
         l_start_point = l_point2_buffer[-1]
         for i in range(0, len(l_point2_buffer)):
             l_end_point = l_point2_buffer[i]
-            l_line_buffer = m_tool_set.make_int_line(l_start_point, l_end_point)
+            l_line_buffer = Canvas.make_int_line(l_start_point, l_end_point)
             self.device_canvas.set_point_buffer(l_line_buffer)
             l_start_point = l_end_point
 
     def __set_buffer_standard(self):
-        l_point2_buffer = m_tool_set.transform_canvas_point_buffer(self.vertex_buffer)
-        l_first_point = l_point2_buffer[0]
-        l_second_point = l_point2_buffer[1]
-        for i in range(2, len(l_point2_buffer)):
-            l_third_point = l_point2_buffer[i]
-            l_triangle_buffer = m_tool_set.make_int_triangle(l_first_point, l_second_point, l_third_point)
+        self.device_pipe.set_input_buffer(self.vertex_buffer)
+        self.device_pipe.run_pipe()
+
+        assert self.device_pipe.is_output_ready
+        l_point2_buffer = self.device_pipe.output_buffer
+
+        assert len(l_point2_buffer) % 3 == 0  # make sure each three points construct a triangle
+        for i in range(0, len(l_point2_buffer)/3):
+            l_first_point = l_point2_buffer[3*i]
+            l_second_point = l_point2_buffer[3*i+1]
+            l_third_point = l_point2_buffer[3*i+2]
+            l_triangle_buffer = Canvas.make_int_triangle(l_first_point, l_second_point, l_third_point)
             self.device_canvas.set_point_buffer(l_triangle_buffer)
-            l_first_point = l_second_point
-            l_second_point = l_third_point
 
     @staticmethod
-    def __read_size_config():
+    def __read_window_size_config():
         o_width = config_warehouse.width_config
         o_height = config_warehouse.height_config
         return [o_width, o_height]

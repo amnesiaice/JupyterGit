@@ -22,7 +22,7 @@ class Color:
         return [self.r, self.g, self.b, self.a]
 
     @staticmethod
-    def get_default_color(p_color='white'):
+    def get_default_color(p_color='black'):
         if p_color == 'red':
             return [0.9, 0.0, 0.0, 1.0]
         elif p_color == 'green':
