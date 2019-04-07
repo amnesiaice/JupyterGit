@@ -1,6 +1,6 @@
 from enum import Enum
 from m_canvas import Canvas
-from PythonRendererCode.PipePackage.m_pipe import Pipe
+from PythonRendererCode.DevicePackage.m_pipe import Pipe
 from PythonRendererCode.PRDebugPackage.m_pr_debug import PRDebug
 from PythonRendererCode.PRDebugPackage.m_pr_debug import LogLevel
 from PythonRendererCode import config_warehouse
@@ -26,8 +26,8 @@ class Device:
 
         # read from config
         l_canvas_size = self.__read_window_size_config()
-        self.default_width = l_canvas_size[0]
-        self.default_height = l_canvas_size[1]
+        self.default_width = l_canvas_size['width']
+        self.default_height = l_canvas_size['height']
 
     def init_device(self,
                     # parameter used for canvas
@@ -137,4 +137,4 @@ class Device:
     def __read_window_size_config():
         o_width = config_warehouse.width_config
         o_height = config_warehouse.height_config
-        return [o_width, o_height]
+        return {'width': o_width, 'height': o_height}
