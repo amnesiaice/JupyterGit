@@ -91,7 +91,6 @@ class Device:
     # ============================================================
     # private function
     # ============================================================
-    # todo: replace set_buffer function with the pipeline to convert from world postion to screen position
     def __set_buffer_point(self):
         self.device_pipe.set_input_buffer(self.vertex_buffer)
         self.device_pipe.run_pipe()

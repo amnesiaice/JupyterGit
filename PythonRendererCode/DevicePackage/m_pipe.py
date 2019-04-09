@@ -9,8 +9,10 @@ class Pipe:
         self.is_output_ready = False
 
         # camera
-        self.main_camera_location = [0.0, 0.0, 100.0]
-        self.main_camera_direction = [1.0, 0.0, 0.0]
+        self.main_camera_location = [100.0, 0.0, 100.0]
+        self.main_camera_look_at = [0.0, 1.0, 0.0]
+        self.main_camera_top = [0.0, 0.0, 1.0]
+        assert m_math_API.is_perpendicular(self.main_camera_look_at, self.main_camera_top)
 
         # viewport
         l_viewport_config = Pipe.__read_viewport_config()
@@ -43,14 +45,19 @@ class Pipe:
         self.viewport_max_depth = p_max_depth
 
     def __convert_world_to_camera(self, p_point):
-        transform_matrix = m_math_API.make_world2camera_matrix(self.main_camera_location, self.main_camera_direction)
+        transform_matrix = m_math_API.make_world2camera_matrix(
+            self.main_camera_location, self.main_camera_look_at, self.main_camera_top)
         l_point = m_math_API.point_transform(transform_matrix, p_point)
+        l_point.append(p_point[3])
         o_point = l_point
         return o_point
 
     def __convert_camera_to_screen(self, p_point):
         self.main_camera_location
-        return [p_point[0], p_point[1], p_point[3]];
+        o_x = p_point[0]
+        o_y = p_point[1]
+        o_c = p_point[3]
+        return [int(o_x), int(o_y), o_c];
 
     # ============================================================
     # config function

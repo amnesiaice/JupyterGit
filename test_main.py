@@ -66,8 +66,8 @@ def test_case(p_case):
 
 def test_cube_model():
     l_vertex_buffer = [
-        m_point.Point(100, 200, 0, m_color.Color.get_default_color("light blue")),
-        m_point.Point(100, 200, 100, m_color.Color.get_default_color("light blue")),
+        m_point.Point(100, 200, 0, m_color.Color.get_default_color("blue")),
+        m_point.Point(100, 200, 100, m_color.Color.get_default_color("red")),
         m_point.Point(100, 400, 0, m_color.Color.get_default_color("light blue")),
         m_point.Point(100, 400, 100, m_color.Color.get_default_color("light blue")),
         m_point.Point(300, 400, 0, m_color.Color.get_default_color("light blue")),
