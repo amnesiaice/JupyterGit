@@ -33,13 +33,23 @@ def make_world2camera_matrix(p_cam_position, p_cam_look_at, p_cam_top):
         ]
     )
     l_matrix_rotate = np.linalg.inv(l_matrix_rotate)
-
-    o_matrix = [
-        [l_matrix_rotate[0][0], l_matrix_rotate[0][1], l_matrix_rotate[0][2], p_cam_position[0]],
-        [l_matrix_rotate[1][0], l_matrix_rotate[1][1], l_matrix_rotate[1][2], p_cam_position[1]],
-        [l_matrix_rotate[2][0], l_matrix_rotate[2][1], l_matrix_rotate[2][2], p_cam_position[2]],
-        [0.0, 0.0, 0.0, 1.0],
-                ]
+    l_matrix_move = np.array(
+        [
+            [1.0, 0.0, 0.0, p_cam_position[0]],
+            [0.0, 1.0, 0.0, p_cam_position[1]],
+            [0.0, 0.0, 1.0, p_cam_position[2]],
+            [0.0, 0.0, 0.0, 1.0],
+        ]
+    )
+    o_matrix = np.array(
+        [
+            [l_matrix_rotate[0][0], l_matrix_rotate[0][1], l_matrix_rotate[0][2], 0.0],
+            [l_matrix_rotate[1][0], l_matrix_rotate[1][1], l_matrix_rotate[1][2], 0.0],
+            [l_matrix_rotate[2][0], l_matrix_rotate[2][1], l_matrix_rotate[2][2], 0.0],
+            [0.0, 0.0, 0.0, 1.0],
+        ]
+    )
+    o_matrix = np.matmul(o_matrix, l_matrix_move)
     return list(o_matrix)
 
 

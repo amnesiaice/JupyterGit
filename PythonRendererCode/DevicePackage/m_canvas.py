@@ -25,6 +25,8 @@ class Canvas:
         self.target = [[self.back_ground_color_vector for i in range(p_width)] for j in range(p_height)]
 
     def set_point(self, p_x, p_y, p_color):
+        if p_x >= len(self.target[0]) or p_x<0 or p_y >= len(self.target) or p_y < 0:
+            return
         self.target[p_y][p_x] = p_color
 
     def set_point_buffer(self, p_point2_buffer):
@@ -53,8 +55,8 @@ class Canvas:
             o_point_list.append([o_x, o_y, o_color])
             xi += delta_x / n_iterate
             yi += delta_y / n_iterate
-            assert abs(xi) <= abs(delta_x)
-            assert abs(yi) <= abs(delta_y)
+            assert abs(xi) - abs(delta_x) < 1e-8
+            assert abs(yi) - abs(delta_y) < 1e-8
         return o_point_list
 
     @staticmethod
@@ -126,7 +128,7 @@ class Canvas:
         u = Canvas.__triangle_area(p_x, p_y, p2x, p2y, p3x, p3y)/l_area
         v = Canvas.__triangle_area(p1x, p1y, p_x, p_y, p3x, p3y)/l_area
         w = Canvas.__triangle_area(p1x, p1y, p2x, p2y, p_x, p_y)/l_area
-        assert u >= 0 and v >= 0 and w >= 0 and abs(u+v+w-1) < 0.01
+        assert u >= 0 and v >= 0 and w >= 0 #and abs(u+v+w-1) < 0.1
 
         # use barycentric coordinate interpolate the color
         p1c = p_point1[2]

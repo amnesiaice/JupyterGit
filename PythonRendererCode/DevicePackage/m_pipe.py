@@ -9,9 +9,9 @@ class Pipe:
         self.is_output_ready = False
 
         # camera
-        self.main_camera_location = [100.0, 0.0, 100.0]
-        self.main_camera_look_at = [0.0, 1.0, 0.0]
-        self.main_camera_top = [0.0, 0.0, 1.0]
+        self.main_camera_location = [0.0, 0.0, 0.0]
+        self.main_camera_look_at = [1.0, 1.0, 0.5]
+        self.main_camera_top = [0.0, -0.5, 1.0]
         assert m_math_API.is_perpendicular(self.main_camera_look_at, self.main_camera_top)
 
         # viewport
@@ -53,11 +53,19 @@ class Pipe:
         return o_point
 
     def __convert_camera_to_screen(self, p_point):
-        self.main_camera_location
-        o_x = p_point[0]
-        o_y = p_point[1]
+        # center origin to top-left origin
+        # o_x = p_point[0]-self.viewport_center[0]
+        # o_y = -p_point[1]+self.viewport_center[1]
+        # o_c = p_point[3]
+        l_proportion = self.viewport_min_depth/p_point[2]
+        o_x = (p_point[0]-self.viewport_center[0])*l_proportion
+        o_y = (-p_point[1]+self.viewport_center[1])*l_proportion
         o_c = p_point[3]
-        return [int(o_x), int(o_y), o_c];
+        if p_point[2] > self.viewport_max_depth or p_point[2] < self.viewport_min_depth:
+            return[-1, -1, o_c]  # will not be draw
+
+        return [int(o_x), int(o_y), o_c]
+
 
     # ============================================================
     # config function
