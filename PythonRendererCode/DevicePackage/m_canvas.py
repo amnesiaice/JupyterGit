@@ -25,7 +25,9 @@ class Canvas:
         self.target = [[self.back_ground_color_vector for i in range(p_width)] for j in range(p_height)]
 
     def set_point(self, p_x, p_y, p_color):
-        if p_x >= len(self.target[0]) or p_x<0 or p_y >= len(self.target) or p_y < 0:
+        if p_x >= self.width:
+            return
+        if p_y >= self.height:
             return
         self.target[p_y][p_x] = p_color
 

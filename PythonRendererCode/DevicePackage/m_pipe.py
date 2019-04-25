@@ -20,6 +20,8 @@ class Pipe:
         self.viewport_height = l_viewport_config['height']
         self.viewport_min_depth = l_viewport_config['min_depth']
         self.viewport_max_depth = l_viewport_config['max_depth']
+        self.viewport_top_left_x = l_viewport_config['top_left_x']
+        self.viewport_top_left_y = l_viewport_config['top_left_y']
         self.viewport_center = [self.viewport_width/2, self.viewport_height/2]
 
     def run_pipe(self):
@@ -56,14 +58,16 @@ class Pipe:
         # center origin to top-left origin
         # o_x = p_point[0]-self.viewport_center[0]
         # o_y = -p_point[1]+self.viewport_center[1]
-        # o_c = p_point[3]
-        l_proportion = self.viewport_min_depth/p_point[2]
-        o_x = (p_point[0]-self.viewport_center[0])*l_proportion
-        o_y = (-p_point[1]+self.viewport_center[1])*l_proportion
         o_c = p_point[3]
-        if p_point[2] > self.viewport_max_depth or p_point[2] < self.viewport_min_depth:
-            return[-1, -1, o_c]  # will not be draw
+        # l_proportion = self.viewport_min_depth/p_point[2]
+        # l_proportion = 1
+        o_x = (2*self.viewport_min_depth/self.viewport_width)*p_point[0] + \
+              (2*self.viewport_top_left_x+self.viewport_width/self.viewport_width)*p_point[2]
+        o_y = (2*self.viewport_min_depth/self.viewport_height)*p_point[1] + \
+              (2*self.viewport_top_left_y+self.viewport_height/self.viewport_height)*p_point[2]
 
+        o_x = o_x-self.viewport_center[0]
+        o_y = -o_y+self.viewport_center[1]
         return [int(o_x), int(o_y), o_c]
 
 
